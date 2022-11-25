@@ -1,21 +1,21 @@
 package datos;
 
-import com.mysql.cj.protocol.Resultset;
 import java.sql.*;
 import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 public class Conexion {
-    private static final String JDBC_URL = "jdbc:mysql://localhosht:3306/control_clientes?useSSL=false&useTimezone=true&serverTimeZone=UTC&allowpublickeyretrieval=true";
-    private static final String JSBC_USER = "root";
-    private static final String JSBC_PASSWORD = "SpyDev1.";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/control_clientes?zeroDateTimeBehavior=CONVERT_TO_NULL&useTimeZone=true&serverTimeZone=UTC&allowPublicKeyRetrieval=true&useSSL=false";
+    private static final String JDBC_USER = "root";
+    private static final String JDBC_PASSWORD = "SpyasDev1.";
     
     public static DataSource getDataSource(){
         BasicDataSource ds = new BasicDataSource();
         ds.setUrl(JDBC_URL);
-        ds.setUsername(JSBC_USER);
-        ds.setPassword(JSBC_PASSWORD);
+        ds.setUsername(JDBC_USER);
+        ds.setPassword(JDBC_PASSWORD);
         ds.setInitialSize(50);
+        System.out.println("Me conecte a la base de datos " + JDBC_PASSWORD);
         return ds;
     }
     

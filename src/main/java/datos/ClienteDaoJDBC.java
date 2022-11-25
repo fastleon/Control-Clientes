@@ -4,8 +4,6 @@ import dominio.Cliente;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ClienteDaoJDBC {
     private static final String SQL_SELECT = "SELECT id_cliente, nombre, apellido, email, telefono, saldo"
