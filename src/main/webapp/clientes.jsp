@@ -15,6 +15,7 @@
         
         <!--Cabecero Bootstrap -->
         <jsp:include page="WEB-INF/paginas/comunes/cabecero.jsp"/>
+        <jsp:include page="WEB-INF/paginas/comunes/botonesNavegacion.jsp"/>
         <ul>
             <c:forEach var="cliente" items="${clientes}">
                 <li>${cliente.idCliente} ${cliente.nombre} ${cliente.apellido} ${cliente.saldo}</li>
