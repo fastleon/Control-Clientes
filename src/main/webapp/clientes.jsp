@@ -15,11 +15,14 @@
         
         <!--Cabecero Bootstrap -->
         <jsp:include page="WEB-INF/paginas/comunes/cabecero.jsp"/>
+        
+        <!--Barra de Navegacion-->
         <jsp:include page="WEB-INF/paginas/comunes/botonesNavegacion.jsp"/>
-        <ul>
-            <c:forEach var="cliente" items="${clientes}">
-                <li>${cliente.idCliente} ${cliente.nombre} ${cliente.apellido} ${cliente.saldo}</li>
-            </c:forEach>
-        </ul>
+        
+        <!--Listado de Clientes-->
+        <jsp:include page="WEB-INF/paginas/cliente/listadoClientes.jsp"/>
+        
+        <!--Pie de Pagina-->
+        <jsp:include page="WEB-INF/paginas/comunes/piePagina.jsp"/>
     </body>
 </html>
