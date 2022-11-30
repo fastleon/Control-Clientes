@@ -7,7 +7,7 @@
                 </button>
             </div>
             <form action="${pageContext.request.contextPath}/ServletControlador?accion=insertar"
-                  method=POST" class="was-validated">
+                  method="POST" class="was-validated">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
