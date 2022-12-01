@@ -9,14 +9,20 @@ public class Conexion {
     private static final String JDBC_USER = "root";
     private static final String JDBC_PASSWORD = "SpyasDev1.";
     
+    //Variable privada para el ds (datasource) para no crear varias instancias de dataSource
+    private static BasicDataSource dataSource;
+    
     public static DataSource getDataSource(){
-        BasicDataSource ds = new BasicDataSource();
-        ds.setUrl(JDBC_URL);
-        ds.setUsername(JDBC_USER);
-        ds.setPassword(JDBC_PASSWORD);
-        ds.setInitialSize(50);
-        System.out.println("Me conecte a la base de datos " + JDBC_PASSWORD);
-        return ds;
+        //Si no se ha creado un datasource se crea uno y se retorna, si ya esta creado se retorna el ya existente:
+        if (dataSource == null) {
+            dataSource = new BasicDataSource();
+            dataSource.setUrl(JDBC_URL);
+            dataSource.setUsername(JDBC_USER);
+            dataSource.setPassword(JDBC_PASSWORD);
+            dataSource.setInitialSize(50);
+        }
+        System.out.println("Me conecte a la base de datos ");
+        return dataSource;
     }
     
     public static Connection getConnection() throws SQLException{
