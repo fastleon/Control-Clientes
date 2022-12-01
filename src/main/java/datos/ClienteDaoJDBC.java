@@ -56,8 +56,10 @@ public class ClienteDaoJDBC {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
             stmt.setInt(1, cliente.getIdCliente());
+            System.out.println("SQL= " + SQL_SELECT_BY_ID);
             rs = stmt.executeQuery();
-            rs.absolute(1);
+            rs.next();
+            //rs.absolute(1);
             String nombre = rs.getString("nombre");
             String apellido = rs.getString("apellido");
             String email = rs.getString("email");

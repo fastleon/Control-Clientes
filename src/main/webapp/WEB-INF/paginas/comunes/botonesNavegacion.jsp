@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col-md-3">
                 <a href="#" class="btn btn-primary btn-block"
-                   data-toogle="modal" data-target="#agregarClienteModal">
+                   data-bs-toggle="modal" data-bs-target="#agregarClienteModal">
                     <i class="fas fa-plus"></i> Agregar Cliente
-                </a>
                 </a>
             </div>
         </div>
     </div>
 </section>
+

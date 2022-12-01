@@ -3,6 +3,7 @@ package web;
 import datos.ClienteDaoJDBC;
 import dominio.Cliente;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,8 +27,20 @@ public class ServletControlador extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Entre en el metodo doGet, antes de insertar");
-        this.accionDefault(request, response);
+        System.out.println("Entre en el metodo doGet, antes de editar");
+        String accion = request.getParameter("accion");
+        if(accion != null){
+            switch(accion){
+                case "editar": 
+                    this.editarCliente(request, response);
+                    break;
+                default:
+                    this.accionDefault(request, response);
+            }
+        }
+        else{
+            this.accionDefault(request, response);
+        }
     }
     
     private double calcularSaldoTotal(List<Cliente> clientes){
@@ -36,6 +49,21 @@ public class ServletControlador extends HttpServlet {
             saldoTotal += cliente.getSaldo();
         }
         return saldoTotal;
+    }
+    
+    private void editarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        //recuperamos el idCliente
+        int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+        Cliente cliente = new ClienteDaoJDBC().encontrar(new Cliente(idCliente));
+        //vamos a usar el metodo Get para enviar la informacion al JSP, 
+        //por eso usa el atributo cliente para enviar el objeto Cliente recien recuperado.
+        request.setAttribute("cliente", cliente);
+        //Ubicacion del jsp a llamar para realizar la edición.
+        String jspEditar = "/WEB-INF/paginas/cliente/editarCliente.jsp";
+        request.getRequestDispatcher(jspEditar).forward(request, response);
+        
+        
+        
     }
     
     @Override
@@ -47,6 +75,9 @@ public class ServletControlador extends HttpServlet {
                 case "insertar": 
                     this.insertarCliente(request, response);
                     break;
+                case "modificar":
+                    this.modificarCliente(request, response);
+                    break;
                 default:
                     this.accionDefault(request, response);
             }
@@ -54,6 +85,30 @@ public class ServletControlador extends HttpServlet {
         else{
             this.accionDefault(request, response);
         }
+    }
+    
+    private void modificarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        //Recuperamos los valores del formulario editarCliente
+        int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        String email = request.getParameter("email");
+        String telefono = request.getParameter("telefono");
+        double saldo = 0;
+        String saldoString = request.getParameter("saldo");
+        if (saldoString != null && !"".equals(saldoString)){
+            saldo = Double.parseDouble(saldoString);
+        }
+        
+        //Creamos el objeto de cliente (modelo)
+        Cliente cliente = new Cliente(idCliente, nombre, apellido, email, telefono, saldo);
+        
+        //Modificar el objeto en la base de datos
+        int registrosModificados = new ClienteDaoJDBC().actualizar(cliente);
+        System.out.println("Registros modificados = " + registrosModificados);
+        
+        //Redirigimos hacia la accion por default
+        this.accionDefault(request, response);
     }
     
     private void insertarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
